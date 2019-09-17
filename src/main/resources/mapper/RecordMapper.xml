@@ -5,7 +5,7 @@
     <resultMap id="default" type="src.yugui.entity.Record"/>
 
     <select id="getRecordList" resultMap="default">
-        SELECT * FROM record ORDER BY id DESC limit 10;
+        SELECT * FROM record ORDER BY id DESC limit 12;
     </select>
 
     <insert id="addRecord" parameterType="src.yugui.entity.Record">

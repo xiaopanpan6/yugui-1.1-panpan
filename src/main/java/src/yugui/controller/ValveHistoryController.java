@@ -129,10 +129,11 @@ public class ValveHistoryController extends BaseController {
         String nowTime = TimeTool.getNowTime();
         Map<String, Object> recordMap = new HashMap<>();
         recordMap.put("userName", userInfo.getUserName());
-        String message = "审核了报告: ";
+        String message = "@{userName}审核了报告: @{reportNo}";;
         recordMap.put("message", message);
         recordMap.put("reportNo", reportNo);
         recordMap.put("operationTime", nowTime);
+        recordMap.put("operationType", Constant.OPERATION_TYPE_NOTIFY);
         recordService.addRecord(recordMap);
         return ResponseMsg.ok(userInfo.getUserName() + " 在 " + tsStr + " 审核了报告: " + reportNo);
     }
@@ -205,10 +206,11 @@ public class ValveHistoryController extends BaseController {
         String nowTime = TimeTool.getNowTime();
         Map<String, Object> recordMap = new HashMap<>();
         recordMap.put("userName", userInfo.getUserName());
-        String message = "审批了报告: ";
+        String message = "@{userName}审批了报告: @{reportNo}";;
         recordMap.put("message", message);
         recordMap.put("operationTime", nowTime);
         recordMap.put("reportNo", reportNo);
+        recordMap.put("operationType", Constant.OPERATION_TYPE_NOTIFY);
         recordService.addRecord(recordMap);
         return ResponseMsg.ok("审批成功！");
     }
@@ -289,9 +291,10 @@ public class ValveHistoryController extends BaseController {
         Map<String, Object> recordMap = new HashMap<>();
         recordMap.put("operationTime", nowTime);
         recordMap.put("userName", userInfo.getUserName());
-        String message = "归档了报告: ";
+        String message = "@{userName}归档了报告: @{reportNo}";
         recordMap.put("message", message);
         recordMap.put("reportNo", reportNo);
+        recordMap.put("operationType", Constant.OPERATION_TYPE_NOTIFY);
         recordService.addRecord(recordMap);
         return ResponseMsg.ok("归档成功！");
     }

@@ -15,5 +15,9 @@ public class Constant {
     public static final int CHECK_APPROVE_SHIFT = 0;
     public static final int CHECK_RIGHT_SHIFT = 1;
     public static final int APPROVE_RIGHT_SHIFT = 2;
+
+
+    public static final String OPERATION_TYPE_NOTIFY = "notification";
+    public static final String OPERATION_TYPE_EVENT = "event";
 }
 

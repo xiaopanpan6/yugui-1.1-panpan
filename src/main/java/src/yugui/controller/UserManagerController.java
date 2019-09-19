@@ -107,10 +107,11 @@ public class UserManagerController extends BaseController {
         Map<String, Object> recordMap = new HashMap<>();
         recordMap.put("operationTime", nowTime);
         recordMap.put("userName", userInfo.getUserName());
-        String message = "提交了审核报告：给：";
+        String message = "@{userName}向@{preUser}提交了审核报告：@{reportNo}";
         recordMap.put("message", message);
         recordMap.put("reportNo", reportNo);
         recordMap.put("preUser", valveNotifyMap.get("userName"));
+        recordMap.put("operationType", Constant.OPERATION_TYPE_EVENT);
         recordService.addRecord(recordMap);
         return ResponseMsg.ok("提交成功！");
     }
@@ -176,9 +177,10 @@ public class UserManagerController extends BaseController {
         recordMap.put("userName", userInfo.getUserName());
         recordMap.put("reportNo", reportNo);
         recordMap.put("operationTime", nowTime);
-        String message = "提交了审批报告：给：";
+        String message = "@{userName}向@{preUser}提交了审批报告：@{reportNo}";
         recordMap.put("message", message);
         recordMap.put("preUser", infoMap.get("userName"));
+        recordMap.put("operationType", Constant.OPERATION_TYPE_EVENT);
         recordService.addRecord(recordMap);
         return ResponseMsg.ok("提交成功!");
     }

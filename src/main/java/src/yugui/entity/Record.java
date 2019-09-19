@@ -19,5 +19,6 @@ public class Record implements Serializable {
     private String reportNo;//报告编号
     private String preUser;//处理人
     private String operationTime;//操作时间
+    private String operationType;//操作类型
 
 }

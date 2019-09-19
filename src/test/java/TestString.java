@@ -1,25 +1,20 @@
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+
 public class TestString {
     public static void main(String[] args) {
-        String strOrig = "yugui-2019-0002";
-        int lastIndex = strOrig.lastIndexOf("-");
-        String prefix = strOrig.substring(0, lastIndex);
-        System.out.println(prefix);
+        OffsetDateTime time = OffsetDateTime.now();
+        System.out.println(time);
 
-        String lastStr = strOrig.substring(lastIndex+1, strOrig.length());
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        System.out.println(ts);
 
-        System.out.println(lastStr);
+        Date day = new Date(System.currentTimeMillis());
+        System.out.println(day);
 
-        int i = Integer.parseInt(lastStr);
 
-        System.out.println(i);
 
-        i++;
-
-        String s =String.valueOf(i);
-
-        String value = prefix + "-" + s;
-
-        System.out.println(value);
 
     }
 }

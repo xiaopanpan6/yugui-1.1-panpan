@@ -21,6 +21,7 @@ import src.yugui.service.CompanyService;
 import src.yugui.service.RecordService;
 import src.yugui.service.ValveHistoryService;
 import src.yugui.service.ValveReportService;
+import src.yugui.util.Constant;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -104,10 +105,12 @@ public class ValveReportController extends BaseController {
         //向记录表添加数据
         String nowTime = TimeTool.getNowTime();
         Map<String, Object> recordMap = new HashMap<>();
-        recordMap.put("userName", userInfo.getUserName());
-        recordMap.put("message", "新建了一份报告: ");
         recordMap.put("reportNo", reportNo);
+        recordMap.put("userName", userInfo.getUserName());
+        String message ="@{userName}新建了一份报告: @{reportNo}";
+        recordMap.put("message", message);
         recordMap.put("operationTime", nowTime);
+        recordMap.put("operationType", Constant.OPERATION_TYPE_NOTIFY);
         recordService.addRecord(recordMap);
 
         return ResponseMsg.ok("新建报告成功！");
@@ -135,9 +138,11 @@ public class ValveReportController extends BaseController {
         String nowTime = TimeTool.getNowTime();
         Map<String, Object> recordMap = new HashMap<>();
         recordMap.put("operationTime", nowTime);
-        recordMap.put("userName", userInfo.getUserName());
-        recordMap.put("message", "修改了报告: ");
         recordMap.put("reportNo", reportNo);
+        recordMap.put("userName", userInfo.getUserName());
+        String message = "@{userName}修改了报告: @{reportNo}";
+        recordMap.put("message", message);
+        recordMap.put("operationType", Constant.OPERATION_TYPE_NOTIFY);
         recordService.addRecord(recordMap);
         return ResponseMsg.ok("修改成功！");
     }

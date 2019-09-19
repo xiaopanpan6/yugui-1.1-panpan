@@ -4,13 +4,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import src.yugui.common.ResponseMsg;
 import src.yugui.common.TimeTool;
+import src.yugui.common.constant.Position;
 import src.yugui.entity.NotifyInfo;
 import src.yugui.entity.Record;
+import src.yugui.entity.UserInfo;
 import src.yugui.entity.ValveHistoryNotify;
 import src.yugui.service.RecordService;
 import src.yugui.service.ValveHistoryService;
@@ -78,10 +82,45 @@ public class NotifyController extends BaseController {
         return ResponseMsg.ok(notifyInfo);
     }
 
-    @ApiOperation(value = "消息动态接口", response = ResponseMsg.class)
+    @ApiOperation(value = "最新动态接口", response = ResponseMsg.class)
     @GetMapping("/getReportNotify")
     public ResponseMsg getReportNotify() {
         List<Record> records = recordService.getRecordList();
         return ResponseMsg.ok(records);
+    }
+
+    @ApiOperation(value = "通知或代办接口", response = ResponseMsg.class)
+    @GetMapping("/getNotifyOrEvent")
+    public ResponseMsg getNotifyOrEvent() {
+        UserInfo userInfo = getLoginUser();
+        String userName = userInfo.getUserName();
+
+        List<Record> records = recordService.getRecordList();
+        List<Record> notifys = new ArrayList<>();
+
+        for (Record record : records) {
+            if (record.getUserName().equals(userName)) {
+                record.setOperationType(Constant.OPERATION_TYPE_NOTIFY);
+                notifys.add(record);
+            }
+            if (!StringUtils.isEmpty(record.getPreUser()) && record.getPreUser().equals(userName)){
+                if (record.getOperationType().equals((Constant.OPERATION_TYPE_EVENT))){
+                    notifys.add(record);
+                }
+            }
+        }
+        return ResponseMsg.ok(notifys);
+    }
+
+    @ApiOperation(value = "删除通知或代办接口", response = ResponseMsg.class)
+    @GetMapping("/deleteNotifyOrEvent")
+    public ResponseMsg deleteNotifyOrEvent(@RequestParam("id") String id) {
+        if (StringUtils.isEmpty(id)){
+            return ResponseMsg.error("未选择id");
+        }
+//        recordService.deleteNotifyOrEvent(Integer.parseInt(id));
+
+
+        return ResponseMsg.ok();
     }
 }
